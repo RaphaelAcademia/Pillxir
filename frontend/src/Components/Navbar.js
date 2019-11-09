@@ -1,10 +1,10 @@
 import React from 'react';
 import '../App.css';
-import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
+import { Nav, Navbar, Container } from 'react-bootstrap';
 
 function NavBar() {
   return (
-		<Navbar collapseOnSelect expand="lg" sticky="top">
+		<Navbar collapseOnSelect expand="lg" sticky="top" bg="light" variant="light">
 			<Container>
 				<Navbar.Brand>Pillxir</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />

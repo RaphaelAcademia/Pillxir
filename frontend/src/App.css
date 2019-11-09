@@ -1,1 +1,5 @@
-
+body {
+    background: url(./Images/background.jpg) no-repeat fixed;
+    background-size: cover;
+    font-size: 1.05em;
+  }
