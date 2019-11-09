@@ -3,3 +3,9 @@ body {
     background-size: cover;
     font-size: 1.05em;
   }
+
+.carousel-control-next,
+.carousel-indicators,
+.carousel-control-prev {
+    filter: invert(100%);
+}
