@@ -1,13 +1,10 @@
 import React from 'react';
 import './App.css';
+import NavBar from './Components/Navbar';
 
 function App() {
   return (
-    <div>
-      <h1 style={{textAlign: "center"}}>
-        Pillxir
-      </h1>
-    </div>
+    <NavBar />
   );
 }
 
