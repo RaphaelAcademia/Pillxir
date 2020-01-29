@@ -43,3 +43,34 @@ exports.delete_a_receipt = (req, res) => {
     res.json({ message: 'Receipt successfully deleted' });
   });
 };
+
+exports.upload = async (req, res) => {
+
+  try {
+    if(!req.files) {
+        res.send({
+            status: false,
+            message: 'No file uploaded'
+        });
+    } else {
+        let file = req.files.file;
+        //Use the mv() method to place the file in upload directory (i.e. "uploads")
+        file.mv('./uploads/' + file.name);
+
+        //send response
+        res.send({
+            status: true,
+            message: 'File is uploaded',
+            data: {
+                name: file.name,
+                mimetype: file.mimetype,
+                size: file.size
+            }
+        });
+    }
+} catch (err) {
+  res.status(500).send(err);
+    
+}
+};
+

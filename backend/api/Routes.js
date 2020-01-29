@@ -1,6 +1,9 @@
 module.exports = function(app) {
   var controller = require('./Controller.js');
-
+  
+  app.route('/upload')
+     .post(controller.upload);
+  
   // Receipts Routes
   app.route('/receipts')
     .get(controller.list_all_receipts)
@@ -10,4 +13,5 @@ module.exports = function(app) {
     .get(controller.read_a_receipt)
     .put(controller.update_a_receipt)
     .delete(controller.delete_a_receipt);
+
 };

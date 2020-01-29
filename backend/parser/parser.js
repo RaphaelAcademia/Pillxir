@@ -1,5 +1,5 @@
 //Using filesystem module to open the textfile
-var fs = require('fs')
+const fs = require('fs')
   , filename = "test2.txt";
 fs.readFile(filename, 'utf8', function(err, data) {
   if (err) throw err;
@@ -13,3 +13,16 @@ fs.readFile(filename, 'utf8', function(err, data) {
   console.log(arr[indexOfTotalAmount]);
   
 });
+
+const { createWorker } = require('tesseract.js');
+
+const worker = createWorker();
+
+(async () => {
+  await worker.load();
+  await worker.loadLanguage('eng');
+  await worker.initialize('eng');
+  const { data: { text } } = await worker.recognize('./helloTest.jpg');
+  console.log(text);
+  await worker.terminate();
+})();
