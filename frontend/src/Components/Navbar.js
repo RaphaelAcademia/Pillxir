@@ -14,9 +14,6 @@ function NavBar() {
 						<Nav.Link as={Link} to="/statistics">Statistics</Nav.Link>
 						<Nav.Link as={Link} to="/upload-receipt">Upload Receipt</Nav.Link>
 					</Nav>
-					<Nav>
-						<Nav.Link>Something</Nav.Link>
-					</Nav>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

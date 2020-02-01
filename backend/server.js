@@ -5,7 +5,10 @@ var express = require('express'),
   Receipt = require('./api/Model.js'), // Created model loading here
   bodyParser = require('body-parser'),
   fileUpload = require('express-fileupload'),
-  cors = require('cors');
+  cors = require('cors'),
+  parser = require('./parser/parser');
+
+const chokidar = require('chokidar');
   
 // Mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -33,3 +36,11 @@ app.use(function(req, res) {
 app.listen(port);
 
 console.log('RESTful API server started on: ' + port);
+
+ // One-liner for current directory
+ chokidar.watch('./uploads').on('add', path => {
+    
+  console.log(path); 
+  parser.parseText(path);
+  
+  });

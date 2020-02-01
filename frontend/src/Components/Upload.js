@@ -8,19 +8,17 @@ import XHRUpload from '@uppy/xhr-upload';
 
 class Upload extends Component {
 
-
     constructor(props, context){
         super(props);
-       
           this.uppy = Uppy();
           this.uppy.use(XHRUpload, {
               endpoint: 'http://localhost:3001/upload',
               method: 'post',
               formData: 'true',
-              fieldName: 'file'
+              fieldName: 'file',
+              animateOpenClose: true
           });
     }
-
   
         render(){
         return (

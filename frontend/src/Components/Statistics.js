@@ -5,7 +5,7 @@ import { Card, Container, Button } from 'react-bootstrap';
 function Statistics() {
   return (
 		<Container>
-			<Card>
+			<Card class="row h-100 justify-content-center align-items-center" > 
 				<Card.Header as="h5">Statistics</Card.Header>
 				<Card.Body>
 					<Card.Title>Spendings</Card.Title>

@@ -54,7 +54,6 @@ exports.upload = async (req, res) => {
         });
     } else {
         let file = req.files.file;
-        //Use the mv() method to place the file in upload directory (i.e. "uploads")
         file.mv('./uploads/' + file.name);
 
         //send response
