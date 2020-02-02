@@ -1,33 +1,89 @@
-// //Using filesystem module to open the textfile
-// const fs = require('fs')
-//   , filename = "test2.txt";
-// fs.readFile(filename, 'utf8', function(err, data) {
-//   if (err) throw err;
+const { exec } = require('child_process');
+const fs = require('fs');
+const axios = require('axios');
 
-//   data = data.trim(); //Eliminate any uneccessary leading/trailing whitespace from text file
+/*
+ * After a receipt has been uploaded, transcribe
+ * to text
+ * 
+ */
 
-//   var arr = data.replace(/\n/g, " ").split(" "); //Replace all new lines with a space and split based on a space
-//   var indexOfTotalAmount = arr.indexOf("TOTAL") + 1;
-  
-//   console.log(arr[0]);
-//   console.log(arr[indexOfTotalAmount]);
-  
-// });
+function parseText(path){
+    
+    filename = path.substring(8, path.length - 4);
+    filenameExtension = path.substring(8);
+    
+    exec('tesseract ./uploads/' + filenameExtension + ' ' + filename, (err, stdout, stderr) => {
+    
+    if (err) {
+        // node couldn't execute the command
+        return;
+    }
 
-function parseText (path){
+    moveFile(filename);
 
-  const { createWorker } = require('tesseract.js'); 
-  const worker = createWorker();
+    // Commented out code below is for debugging
+    // console.log('tesseract ./uploads/' + filenameExtension + ' ' + filename);
+    // console.log(`stdout: ${stdout}`);
+    // console.log(`stderr: ${stderr}`);
 
-  (async () => {
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    const { data: { text } } = await worker.recognize(path);
-    console.log(text);
-    await worker.terminate();
-  })();
-  
-};
+    });
+}
+
+/*
+ * After a file has been transcribed,
+ * move it to the transcribed folder
+ *  
+ */
+
+function moveFile(filename){
+
+    exec('mv ' + filename +'.txt ./transcribed', (err, stdout, stderr) => {
+    
+    if (err) {
+        // node couldn't execute the command
+        return;
+    }
+
+     // Commented out code below is for debugging
+    // console.log('mv ' + filename +'.txt ./transcribed');
+    // console.log(filename + '.txt');
+    // console.log(`stdout: ${stdout}`);
+    // console.log(`stderr: ${stderr}`);
+
+    putTextToDatabase(filename);
+
+    });   
+}
+
+function putTextToDatabase (filename){
+
+    fs.readFile('./transcribed/' + filename + '.txt', 'utf8', (err, data) => {
+
+        if (err){
+            throw err;
+        } 
+
+        storeName = data.split('\n').shift();
+
+        data = data.trim(); // Trim unnecessary whitepsace
+
+        // Basic parsing,
+        arr = data.replace(/\n/g, " ").split(" "); //Replace all new lines with a space and split based on a space
+        
+        // TODO: Account for the different ways total can show up
+        indexOfTotalAmount = arr.indexOf("TOTAL:") + 1;
+
+        totalAmount = arr[indexOfTotalAmount].replace('$', '');
+
+        axios.post('http://localhost:3001/receipts', {
+            Total: totalAmount,
+            Store: storeName
+        })
+        
+
+
+    });
+}
 
 exports.parseText = parseText;
