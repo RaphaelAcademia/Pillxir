@@ -11,6 +11,14 @@ exports.list_all_receipts = (req, res) => {
   });
 };
 
+exports.delete_all_receipts = (req, res) => {
+  Receipt.remove({}, (err, receipt) => {
+    if (err)
+      res.send(err);
+    res.json({ message: 'All receipts successfully deleted' });
+  });
+};
+
 exports.create_a_receipt = (req, res) => {
   var new_receipt = new Receipt(req.body);
   new_receipt.save((err, receipt) => {

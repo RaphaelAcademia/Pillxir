@@ -7,6 +7,7 @@ module.exports = function(app) {
   // Receipts Routes
   app.route('/receipts')
     .get(controller.list_all_receipts)
+    .delete(controller.delete_all_receipts)
     .post(controller.create_a_receipt);
     
   app.route('/receipts/:receiptId')
