@@ -7,3 +7,5 @@ https://www.youtube.com/watch?v=QhJiOCwz-_I
 
 TODO: Use RegEx to find closest match to Total as total can be displayed differently
 (ex: "TOTAL", "Total:", "Total", "TOTAL", etc);
+
+**NOTE: Requires Tesseract-OCR installed on computer and added on 

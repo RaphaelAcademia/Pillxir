@@ -6,7 +6,7 @@ function UploadReceipt() {
 
     return (
         <Container>
-            <div class="row h-100 justify-content-center align-items-center mt-5" >
+            <div className="row h-100 justify-content-center align-items-center mt-5" >
             <Upload/>
             </div>
         </Container>
