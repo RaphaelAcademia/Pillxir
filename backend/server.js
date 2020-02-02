@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost/ReceiptDB', {
 }); 
 
 // To clear database
-mongoose.connection.collection('receipts').drop();
+//mongoose.connection.collection('receipts').drop();
 
 // Enable files upload
 app.use(fileUpload({

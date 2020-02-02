@@ -74,14 +74,14 @@ function putTextToDatabase (filename){
         // TODO: Account for the different ways total can show up
         indexOfTotalAmount = arr.indexOf("TOTAL:") + 1;
 
-        totalAmount = arr[indexOfTotalAmount].replace('$', '');
+        if (arr.indexOf("TOTAL:") == -1)
+            indexOfTotalAmount = arr.indexOf("TOTAL") + 1;
 
+        totalAmount = arr[indexOfTotalAmount].replace('$', '');
         axios.post('http://localhost:3001/receipts', {
             Total: totalAmount,
             Store: storeName
         })
-        
-
 
     });
 }
