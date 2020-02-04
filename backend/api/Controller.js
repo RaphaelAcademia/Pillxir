@@ -52,6 +52,26 @@ exports.delete_a_receipt = (req, res) => {
   });
 };
 
+/**
+ * Returns specific date based on request query string
+ * format of request query paramaters:
+ * 
+ * 
+ * "startDate": "YYYY-MM-DD"
+ * "endDate": "YYYY-MM-DD"
+ * 
+ * 
+ */
+exports.get_speciic_receipts = (req, res) => {
+ 
+  Receipt.find({Timestamp: { $gte: new Date(req.query.startDate), $lte: new Date(req.query.endDate).setHours(24)}}, (err, receipt) => {
+    if (err)
+      res.send(err);
+    res.json(receipt);
+  });
+};
+
+//Handles uploading
 exports.upload = async (req, res) => {
 
   try {
