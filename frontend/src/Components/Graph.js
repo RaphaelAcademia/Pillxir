@@ -2,8 +2,8 @@ import {Hint, LineMarkSeries, XYPlot, XAxis, YAxis, HorizontalGridLines, Vertica
 import "react-vis/dist/style.css";
 import React from 'react';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
-
+import LoadingOverlay from 'react-loading-overlay';
+import {Button} from 'react-bootstrap';
 
 
 function getData(data){
@@ -12,17 +12,36 @@ function getData(data){
 
     let temp = [];
     data.forEach((item)=>{
-        temp.push({x: days[new Date(item.Timestamp).getDay()], y: item.Total})
+        temp.push({x: days[new Date(item.Timestamp).getDay()], y: item.Total, Store: item.Store})
     })
 
     temp.sort((a,b) => days.indexOf(a.x)-days.indexOf(b.x));
-  
-console.log(temp);
 
-    return temp;
+    
+    //Summing all the values for a particular day
+    let tempSum = {};
+
+    for (let i =0; i < temp.length; i++){
+        let obj = temp[i];
+     
+        if (!tempSum[obj.x]){
+            tempSum[obj.x] = obj;
+        }
+        else{
+            tempSum[obj.x].y += obj.y;
+            tempSum[obj.x].Store += ", " + obj.Store; 
+        }
+    }
+
+    let result = [];
+
+    for (var prop in tempSum)
+        result.push(tempSum[prop]);
+
+    return result;
 }
 
-export default class DynamicCrosshair extends React.Component {
+export default class Graph extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,12 +52,16 @@ export default class DynamicCrosshair extends React.Component {
     }
   
     componentDidMount() {
+
         let dateMinus7Days= new Date();
         dateMinus7Days.setDate(dateMinus7Days.getDate() - 7)
+
+        // Gets data from the last 7 days
         axios.get('http://localhost:3001/specificReceipts', {params: {
             "startDate": (dateMinus7Days.toISOString().slice(0,10)),
             "endDate": (new Date().toISOString().slice(0,10))}
         })
+
         .then(res => {
             const data = getData(res.data);
             this.setState({ data });
@@ -60,23 +83,25 @@ export default class DynamicCrosshair extends React.Component {
         if (this.state.loaded)
         {
             return (
-                <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={600} height={600} style={{backgroundColor: "#ffffff"}}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis />
-                    <YAxis />
-                    <LineMarkSeries  onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
-                    {this.state.value ? <Hint value={this.state.value} /> : null}
-                </XYPlot>
+                <div className='mt-auto mx-auto'>
+                    <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
+                        <VerticalGridLines />
+                        <HorizontalGridLines />
+                        <XAxis title="Day"/>
+                        <YAxis title="Spending ($)"/>
+                        <LineMarkSeries onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
+                        {this.state.value ? <Hint value={this.state.value}  /> : null}
+                    </XYPlot>
+                </div>
+                
                 );
         }
         else{
             return (
-                <Spinner animation="border" role="status" variant="light">
-                <span className="sr-only ">Loading...</span>
-                </Spinner>
-            )
-        }
+                <LoadingOverlay className="mt-auto pt-auto" active='true' spinner text='Loading'
+                >
+                </LoadingOverlay>
+            )}
         
     }
 }

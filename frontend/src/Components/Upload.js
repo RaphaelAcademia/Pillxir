@@ -10,7 +10,19 @@ class Upload extends Component {
 
     constructor(props, context){
         super(props);
-          this.uppy = Uppy();
+          this.uppy = Uppy({
+            //   restrictions: {
+            //       maxNumberOfFiles: 1
+            //   },
+            //   onBeforeUpload: (files) => {
+            //       if (Object.keys(files).length > 1){
+            //           return Promise.reject('Only 1 file can be uploaded!');
+            //       }
+            //       return Promise.resolve();
+              //
+          
+              
+          });
           this.uppy.use(XHRUpload, {
               endpoint: 'http://localhost:3001/upload',
               method: 'post',
@@ -18,6 +30,7 @@ class Upload extends Component {
               fieldName: 'file',
               animateOpenClose: true
           });
+          
     }
   
         render(){

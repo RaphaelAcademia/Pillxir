@@ -64,7 +64,8 @@ function putTextToDatabase (filename){
             throw err;
         } 
 
-        storeName = data.split('\n').shift();
+        
+        let storeName = data.split('\n').shift();
 
         data = data.trim(); // Trim unnecessary whitepsace
 
@@ -73,16 +74,25 @@ function putTextToDatabase (filename){
         
         // TODO: Account for the different ways total can show up
         indexOfTotalAmount = arr.indexOf("TOTAL:") + 1;
-
-        if (arr.indexOf("TOTAL:") == -1)
+        
+        if (arr.indexOf("TOTAL:") <= 0 ){
             indexOfTotalAmount = arr.indexOf("TOTAL") + 1;
+        }
+        
+        if (indexOfTotalAmount  <= 0){
+            indexOfTotalAmount = arr.indexOf("Total") + 1;
+        }
+       
 
-        totalAmount = arr[indexOfTotalAmount].replace('$', '');
+        
+        let totalAmount = arr[indexOfTotalAmount].replace('$', '');
+        
+  
         axios.post('http://localhost:3001/receipts', {
             Total: totalAmount,
             Store: storeName
         })
-
+        
     });
 }
 
