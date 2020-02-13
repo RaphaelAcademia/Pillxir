@@ -9,9 +9,11 @@ function Statistics() {
 		<Container>
 			<div class="row">
 				<div class = "col-md-3">
-					<Button className="col-md-8 ml-3 mt-5">Weekly</Button>
-					<Button className="col-md-8 ml-3 mt-3">Monthly</Button>
-					<Button className="col-md-8 ml-3 mt-3">Average Spendings</Button>
+					<div class="row" >
+						<Button className="col-md-8 ml-3 mt-5">Weekly</Button>
+						<Button className="col-md-8 ml-3 mt-3">Monthly</Button>
+						<Button className="col-md-8 ml-3 mt-3">Average Spendings</Button>
+					</div>
 				</div>
 				<div className="col-md-8 h-100 justify-content-center align-items-center mt-5 ml-1">
 					<Graph/>
