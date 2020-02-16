@@ -8,14 +8,12 @@ function Statistics() {
   return (
 		<Container>
 			<div class="row">
-				<div class = "col-md-3">
-					<div class="row" >
-						<Button className="col-md-8 ml-3 mt-5">Weekly</Button>
-						<Button className="col-md-8 ml-3 mt-3">Monthly</Button>
-						<Button className="col-md-8 ml-3 mt-3">Average Spendings</Button>
-					</div>
+				<div class = "col-md-3 text-center">
+						<Button id="btn-weekly" className="col-md-8 mt-5">Weekly</Button>
+						<Button id="btn-monthly" className="col-md-8 mt-3">Monthly</Button>
+						<Button id="btn-average" className="col-md-8 mt-3">Average Spendings</Button>
 				</div>
-				<div className="col-md-8 h-100 justify-content-center align-items-center mt-5 ml-1">
+				<div className="col-md-6 h-100 justify-content-center align-items-center mt-5">
 					<Graph/>
 				</div>
 			</div>

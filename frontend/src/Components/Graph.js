@@ -84,7 +84,7 @@ export default class Graph extends React.Component {
         {
             return (
                 <div className='mt-auto mx-auto'>
-                    <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
+                    <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={510} height={510} style={{backgroundColor: "#ffffff"}}>
                         <VerticalGridLines />
                         <HorizontalGridLines />
                         <XAxis title="Day"/>
