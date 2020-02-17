@@ -55,14 +55,16 @@ export default class Graph extends React.Component {
     }
   
     componentDidMount() {
-
-        let dateMinus7Days= new Date();
-        dateMinus7Days.setDate(dateMinus7Days.getDate() - 7)
-
-        // Gets data from the last 7 days
+        let day = new Date();
+        let currentWeekDay = day.getDay();
+        let lessDays = currentWeekDay == 0 ? 6 : currentWeekDay - 1;
+        let weekStart = new Date(new Date(day).setDate(day.getDate() - lessDays));
+        let weekEnd = new Date(new Date(weekStart).setDate(weekStart.getDate() + 6));
+ 
+        // Gets data for the week
         axios.get('http://localhost:3001/specificReceipts', {params: {
-            "startDate": (dateMinus7Days.toISOString().slice(0,10)),
-            "endDate": (new Date().toISOString().slice(0,10))}
+            "startDate": (weekStart.toISOString().slice(0,10)),
+            "endDate": (weekEnd.toISOString().slice(0,10))}
         })
 
         .then(res => {

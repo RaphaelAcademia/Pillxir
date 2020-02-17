@@ -7,7 +7,7 @@ import Graph from './Graph.js';
 function Statistics() {
   return (
 		<Container>
-			<div class="row">
+			<div className="row">
 				<div className="col-md-12 mt-5">
 					<Graph/>
 				</div>
