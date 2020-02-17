@@ -6,7 +6,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import {Button} from 'react-bootstrap';
 
 
-function getData(data){
+function getWeeklyData(data){
 
     let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -47,7 +47,10 @@ export default class Graph extends React.Component {
         this.state = {
             data: {},
             loaded: false,
-            value: null
+            value: null,
+            weekly: true,
+            monthly: false,
+            averageSpendings: false
         };
     }
   
@@ -63,35 +66,54 @@ export default class Graph extends React.Component {
         })
 
         .then(res => {
-            const data = getData(res.data);
+            const data = getWeeklyData(res.data);
             this.setState({ data });
             this.setState({loaded: true});
         })
     };
 
-  _forgetValue = () => {
-    this.setState({
-      value: null
-    });
-  };
+    _weekly = () => {
 
-  _rememberValue = value => {
-    this.setState({value});
-  };
+    };
+
+    _monthly = () => {
+
+    };
+
+    _average = () => {
+        
+    };
+
+    _forgetValue = () => {
+        this.setState({
+        value: null
+        });
+    };
+
+    _rememberValue = value => {
+        this.setState({value});
+    };
 
     render() {
         if (this.state.loaded)
         {
             return (
-                <div className='mt-auto mx-auto'>
-                    <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={510} height={510} style={{backgroundColor: "#ffffff"}}>
-                        <VerticalGridLines />
-                        <HorizontalGridLines />
-                        <XAxis title="Day"/>
-                        <YAxis title="Spending ($)"/>
-                        <LineMarkSeries onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
-                        {this.state.value ? <Hint value={this.state.value}  /> : null}
-                    </XYPlot>
+                <div className="row">
+                    <div className="col-md-3 text-center">
+                        <Button id="btn-weekly" onClick={this._weekly} className="col-md-8">Weekly</Button>
+                        <Button id="btn-monthly" onClick={this._monthly} className="col-md-8 mt-3">Monthly</Button>
+                        <Button id="btn-average" onClick={this._average} className="col-md-8 mt-3">Average Spendings</Button>
+                    </div>
+                    <div className="col-md-8">
+                        <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={510} height={510} style={{backgroundColor: "#ffffff"}}>
+                            <VerticalGridLines />
+                            <HorizontalGridLines />
+                            <XAxis title="Day"/>
+                            <YAxis title="Spending ($)"/>
+                            <LineMarkSeries onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
+                            {this.state.value ? <Hint value={this.state.value}  /> : null}
+                        </XYPlot>
+                    </div>
                 </div>
                 
                 );
