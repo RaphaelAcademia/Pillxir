@@ -5,6 +5,7 @@ import '@uppy/core/dist/style.css'
 import '@uppy/dashboard/dist/style.css'
 import '@uppy/xhr-upload';
 import XHRUpload from '@uppy/xhr-upload';
+import {Spring} from 'react-spring/renderprops';
 
 class Upload extends Component {
 
@@ -28,10 +29,17 @@ class Upload extends Component {
   
         render(){
         return (
-            <Dashboard uppy={this.uppy} />
-          );
-        }
-    }
+          <Spring from={{opacity: 0}} to={{opacity: 1}} className="col-md-8">
+            {props => (
+              <div style={props}>
+                <Dashboard uppy={this.uppy} />
+              </div>
+            )}
+          </Spring>
+        )};
+}
+
 
 export default Upload;
     
+

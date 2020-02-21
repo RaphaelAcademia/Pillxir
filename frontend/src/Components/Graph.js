@@ -188,7 +188,7 @@ export default class Graph extends React.Component {
                 <div className="col-md-3 text-center">
                     <Button id="btn-weekly" onClick={() => this._toggleButton('weekly')} className="col-md-8">Current Week</Button>
                     <Button id="btn-monthly" onClick={() => this._toggleButton('monthly')} className="col-md-8 mt-3">Current Month</Button>
-                    <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} active className="col-md-8 mt-3">Average Weekly Spendings</Button>
+                    <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} className="col-md-8 mt-3">Average Weekly Spendings</Button>
                 </div>
             </div>
             );
@@ -203,9 +203,9 @@ export default class Graph extends React.Component {
                         <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} className="col-md-8 mt-3">Average Weekly Spendings</Button>
                     </div>
                     <Spring from={{opacity: 0}} to={{opacity: 1}} className="col-md-8">
-                        {props1 => (
-                            <div style={props1}>
-                                <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={510} height={510} style={{backgroundColor: "#ffffff"}}>
+                        {props => (
+                            <div style={props} >
+                                <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
                                 <VerticalGridLines />
                                 <HorizontalGridLines />
                                 <XAxis title="Day"/>
@@ -229,10 +229,10 @@ export default class Graph extends React.Component {
                     <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} className="col-md-8 mt-3">Average Weekly Spendings</Button>
                 </div>
                 <Spring from={{opacity: 0}} to={{opacity: 1}} className="col-md-8">
-                        {props2 => (
-                            <div style={props2}>
+                        {props => (
+                            <div style={props}>
                             <div className="col-md-8">
-                                <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={510} height={510} style={{backgroundColor: "#ffffff"}}>
+                                <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
                                     <VerticalGridLines />
                                     <HorizontalGridLines />
                                     <XAxis tickLabelAngle={-45} title="Day of Month"/>
@@ -261,9 +261,13 @@ export default class Graph extends React.Component {
         }
         else{
             return (
-                <LoadingOverlay className="mt-auto pt-auto" active='true' spinner text='Loading'
-                >
-                </LoadingOverlay>
+            <div className="row">
+                <div className="col-md-3 text-center">
+                    <Button id="btn-weekly" onClick={() => this._toggleButton('weekly')} active className="col-md-8">Current Week</Button>
+                    <Button id="btn-monthly" onClick={() => this._toggleButton('monthly')} className="col-md-8 mt-3">Current Month</Button>
+                    <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} className="col-md-8 mt-3">Average Weekly Spendings</Button>
+                </div>
+            </div>
             )}
         
     }
