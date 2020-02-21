@@ -31,8 +31,6 @@ class Upload extends Component {
             <Dashboard uppy={this.uppy} />
           );
         }
-            
-       
     }
 
 export default Upload;
