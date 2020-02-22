@@ -135,7 +135,7 @@ export default class Graph extends React.Component {
                     </div>
                     <Spring from={{opacity: 0}} to={{opacity: 1}} className="col-md-8">
                         {props => (
-                            <div style={props} >
+                            <div className="col-md-9" style={props} >
                                 <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
                                 <VerticalGridLines />
                                 <HorizontalGridLines />
@@ -147,7 +147,6 @@ export default class Graph extends React.Component {
                             </div>
                         )}
                     </Spring>
-                    ))}
                 </div>
             );
         }
@@ -161,8 +160,7 @@ export default class Graph extends React.Component {
                 </div>
                 <Spring from={{opacity: 0}} to={{opacity: 1}} className="col-md-8">
                         {props => (
-                            <div style={props}>
-                            <div className="col-md-8">
+                            <div className="col-md-9" style={props}>       
                                 <XYPlot xType='ordinal' onMouseLeave={this._onMouseLeave} width={550} height={550} style={{backgroundColor: "#ffffff"}}>
                                     <VerticalGridLines />
                                     <HorizontalGridLines />
@@ -172,10 +170,8 @@ export default class Graph extends React.Component {
                                     {this.state.value ? <Hint value={this.state.value}  /> : null}
                                 </XYPlot>
                             </div>
-                         </div>
                         )}
-                    </Spring>
-                    ))}            
+                    </Spring>    
             </div>
             );
         }
