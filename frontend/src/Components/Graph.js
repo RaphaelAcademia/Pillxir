@@ -6,73 +6,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import {Button} from 'react-bootstrap';
 import {animated} from 'react-spring';
 import {Spring} from 'react-spring/renderprops';
-
-function getWeeklyData(data){
-
-    let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-    let temp = [];
-    data.forEach((item)=>{
-        temp.push({x: days[new Date(item.Timestamp).getDay()], y: +(item.Total.toFixed(2)), Store: item.Store})
-    })
-
-    temp.sort((a,b) => days.indexOf(a.x)-days.indexOf(b.x));
-
-    
-    //Summing all the values for a particular day
-    let tempSum = {};
-
-    for (let i =0; i < temp.length; i++){
-        let obj = temp[i];
-     
-        if (!tempSum[obj.x]){
-            tempSum[obj.x] = obj;
-        }
-        else{
-            tempSum[obj.x].y += +(obj.y.toFixed(2));
-            tempSum[obj.x].Store += ", " + obj.Store; 
-        }
-    }
-
-    let result = [];
-
-    for (var prop in tempSum)
-        result.push(tempSum[prop]);
-
-    return result;
-}
-
-function getMonthlyData(data){
-    let temp = [];
-    data.forEach((item)=>{
-        temp.push({x:(item.Timestamp.slice(5,10)), y: +(item.Total.toFixed(2)), Store: item.Store})
-    });
-
-    temp.sort((a,b) => a.x - b.x);
-
-      //Summing all the values for a particular day
-      let tempSum = {};
-
-      for (let i =0; i < temp.length; i++){
-          let obj = temp[i];
-       
-          if (!tempSum[obj.x]){
-              tempSum[obj.x] = obj;
-          }
-          else{
-              tempSum[obj.x].y += +(obj.y.toFixed(2));
-              tempSum[obj.x].Store += ", " + obj.Store; 
-          }
-      }
-      let result = [];
-
-      for (var prop in tempSum)
-        result.push(tempSum[prop]);
-      
-    result.sort((a,b) => parseInt(a.x.slice(3)) - parseInt(b.x.slice(3)));
-    
-    return result;
-}
+import  {getWeeklyData, getMonthlyData} from '../formatData';
 
 export default class Graph extends React.Component {
     constructor(props) {
@@ -87,10 +21,7 @@ export default class Graph extends React.Component {
             nothing: null
         };
         
-    }
-
-    
-    
+    }    
   
     componentDidMount() {
       this._weeklyData();
@@ -188,7 +119,7 @@ export default class Graph extends React.Component {
                 <div className="col-md-3 text-center">
                     <Button id="btn-weekly" onClick={() => this._toggleButton('weekly')} className="col-md-8">Current Week</Button>
                     <Button id="btn-monthly" onClick={() => this._toggleButton('monthly')} className="col-md-8 mt-3">Current Month</Button>
-                    <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} className="col-md-8 mt-3">Average Weekly Spendings</Button>
+                    <Button id="btn-averageSpendings" onClick={() => this._toggleButton('average')} active className="col-md-8 mt-3">Average Weekly Spendings</Button>
                 </div>
             </div>
             );
