@@ -275,7 +275,7 @@ export default class Graph extends React.Component {
 
                                     <VerticalGridLines />
                                     <HorizontalGridLines />
-                                    <XAxis title="Day of Month"/>
+                                    <XAxis title="Day"/>
                                     <YAxis title="Spending ($)"/>
                                     <LineMarkSeries onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
                                     {this.state.value ? <Hint value={this.state.value}  /> : null}
@@ -317,7 +317,7 @@ export default class Graph extends React.Component {
                                 />
                                     <VerticalGridLines />
                                     <HorizontalGridLines />
-                                    <XAxis title="Day of Month"/>
+                                    <XAxis tickLabelAngle={-45} title="Day of Month"/>
                                     <YAxis title="Spending ($)"/>
                                     <LineMarkSeries onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue} onNearestX={this._onNearestX} data={this.state.data} />
                                     {this.state.value ? <Hint value={this.state.value}  /> : null}
