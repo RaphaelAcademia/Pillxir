@@ -1,3 +1,5 @@
+import regression from 'regression';
+
 // Adjusts the day since getDay() returns Sunday as 0
 export function adjustDay(day)
 {
@@ -29,7 +31,7 @@ export function adjustDay(day)
         
         case 6:
             return 5;
-            break;
+            break; 
     }
 }
 
@@ -98,4 +100,65 @@ export function getMonthlyData(data){
     result.sort((a,b) => parseInt(a.x.slice(3)) - parseInt(b.x.slice(3)));
     
     return result;
+}
+
+export function getAverageWeeklyData(data){
+
+    let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    let convertedData = [];
+    let prediction = [];
+
+    //Converting data to an array of arrays
+    for (let i = 0; i < data.length; i++){
+        convertedData[i] = [days.indexOf(data[i].x), data[i].y];
+    }
+
+    const resultLinear = regression.linear(convertedData);
+    const resultPoly = regression.polynomial(convertedData, {order: 3});
+
+    if (resultLinear.r2 > resultPoly.r2){
+        
+        for (let i = 0; i < data.length; i++) {    
+            let xValue = convertedData[i][0];
+            prediction.push({x: days[xValue], y:  resultLinear.predict(xValue)[1]});
+        }
+        return prediction;
+    }
+    else{
+        for (let i = 0; i < data.length; i++) {
+            let xValue = convertedData[i][0];
+            prediction.push({x: days[xValue], y:  resultPoly.predict(xValue)[1]});
+        }
+        return prediction;
+    }
+}
+
+export function getAverageMonthlyData(data){
+    
+    let convertedData = [];
+    let prediction = [];
+
+    //Converting data to an array of arrays
+    for (let i = 0; i < data.length; i++){
+        convertedData[i] = [parseInt(data[i].x.slice(3)), data[i].y];
+    }
+
+    const resultLinear = regression.linear(convertedData);
+    const resultPoly = regression.polynomial(convertedData, {order: 3});
+
+    if (resultLinear.r2 > resultPoly.r2){
+        
+        for (let i = 0; i < data.length; i++) {    
+            let xValue = convertedData[i][0];
+            prediction.push({x: data[i].x, y:  resultLinear.predict(xValue)[1]});
+        }
+        return prediction;
+    }
+    else{
+        for (let i = 0; i < data.length; i++) {
+            let xValue = convertedData[i][0];   
+            prediction.push({x: data[i].x, y:  resultPoly.predict(xValue)[1]});
+        }
+        return prediction;
+    }
 }
