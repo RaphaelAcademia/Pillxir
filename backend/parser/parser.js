@@ -83,6 +83,9 @@ function putTextToDatabase (filename){
             indexOfTotalAmount = arr.indexOf("Total") + 1;
         }
        
+        if (indexOfTotalAmount  <= 0){
+            indexOfTotalAmount = arr.indexOf("Total:") + 1;
+        }
 
         
         let totalAmount = arr[indexOfTotalAmount].replace('$', '');
