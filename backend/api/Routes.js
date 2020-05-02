@@ -1,5 +1,3 @@
-// Routes
-
 module.exports = function(app) {
   var controller = require('./Controller.js');
   
