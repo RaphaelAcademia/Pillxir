@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
   Receipt = mongoose.model('Receipts');
+var service = require('./Service.js');
 
 exports.list_all_receipts = (req, res) => {
   Receipt.find({}, (err, receipt) => {
@@ -82,9 +83,7 @@ exports.upload = async (req, res) => {
         });
     } else {
         let file = req.files.file;
-        file.mv('./uploads/' + file.name);
-
-        //send response
+        service.moveFile(file);
         res.send({
             status: true,
             message: 'File is uploaded',
@@ -97,7 +96,6 @@ exports.upload = async (req, res) => {
     }
 } catch (err) {
   res.status(500).send(err);
-    
 }
 };
 
